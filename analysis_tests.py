@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ast import literal_eval
-from google.cloud import language
+import google.cloud
 from os import getenv
 from pytest import fixture
 
@@ -33,7 +33,7 @@ def get_tweet_text(tweet_id):
 def make_entity(name, type, metadata, salience, mentions):
     """Creates a language.enums.Entity object."""
 
-    entity = language.enums.Entity()
+    entity = google.cloud.language.enums.Entity()
     entity.name = name
     entity.type = type
     entity.metadata = metadata
@@ -246,7 +246,7 @@ def test_get_company_data_empty(analysis):
 def test_entity_tostring_1(analysis):
     assert analysis.entity_tostring(make_entity(
         name="General Motors",
-        type=language.enums.Entity.Type.ORGANIZATION,
+        type=google.cloud.language.enums.Entity.Type.ORGANIZATION,
         metadata={
             "mid": "/m/035nm",
             "wikipedia_url": "http://en.wikipedia.org/wiki/General_Motors"},
@@ -263,7 +263,7 @@ def test_entity_tostring_1(analysis):
 def test_entity_tostring_2(analysis):
     assert analysis.entity_tostring(make_entity(
         name="jobs",
-        type=language.enums.Entity.Type.OTHER,
+        type=google.cloud.language.enums.Entity.Type.OTHER,
         metadata={},
         salience=0.31634554,
         mentions=["jobs"])) == (
@@ -277,14 +277,14 @@ def test_entity_tostring_2(analysis):
 def test_entities_tostring(analysis):
     assert analysis.entities_tostring([make_entity(
         name="General Motors",
-        type=language.enums.Entity.Type.ORGANIZATION,
+        type=google.cloud.language.enums.Entity.Type.ORGANIZATION,
         metadata={
             "mid": "/m/035nm",
             "wikipedia_url": "http://en.wikipedia.org/wiki/General_Motors"},
         salience=0.33838183,
         mentions=["General Motors"]), make_entity(
         name="jobs",
-        type=language.enums.Entity.Type.OTHER,
+        type=google.cloud.language.enums.Entity.Type.OTHER,
         metadata={},
         salience=0.31634554,
         mentions=["jobs"])]) == (

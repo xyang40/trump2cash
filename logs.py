@@ -2,8 +2,7 @@
 
 from backoff import expo
 from backoff import on_exception
-from google.cloud import error_reporting
-from google.cloud import logging
+import google.cloud
 from logging import Formatter
 from logging import getLogger
 from logging import DEBUG
@@ -37,8 +36,8 @@ class Logs:
 
         if self.to_cloud:
             # Initialize the Stackdriver logging and error reporting clients.
-            self.cloud_logger = logging.Client().logger(name)
-            self.error_client = error_reporting.Client()
+            self.cloud_logger = google.cloud.logging.Client().logger(name)
+            self.error_client = google.cloud.error_reporting.Client()
 
             # Initialize the local fallback logger.
             self.fallback_logger, fallback_handler = self.get_local_logger(

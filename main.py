@@ -5,8 +5,8 @@ from datetime import datetime
 from time import sleep
 
 from analysis import Analysis
-from BaseHTTPServer import BaseHTTPRequestHandler
-from BaseHTTPServer import HTTPServer
+from http.server import BaseHTTPRequestHandler
+from http.server import HTTPServer
 from logs import Logs
 from threading import Event
 from threading import Thread

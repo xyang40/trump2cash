@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from google.cloud import language
+import google
 from re import compile
 from re import IGNORECASE
 from requests import get
-from urllib import quote_plus
+from urllib.parse import quote_plus
 
 from logs import Logs
 from twitter import Twitter
@@ -46,7 +46,7 @@ class Analysis:
 
     def __init__(self, logs_to_cloud):
         self.logs = Logs(name="analysis", to_cloud=logs_to_cloud)
-        self.language_client = language.LanguageServiceClient()
+        self.language_client = google.cloud.language.LanguageServiceClient()
         self.twitter = Twitter(logs_to_cloud=logs_to_cloud)
 
     def get_company_data(self, mid):
@@ -115,9 +115,9 @@ class Analysis:
             return None
 
         # Run entity detection.
-        document = language.types.Document(
+        document = google.cloud.language.types.Document(
             content=text,
-            type=language.enums.Document.Type.PLAIN_TEXT,
+            type=google.cloud.language.enums.Document.Type.PLAIN_TEXT,
             language="en")
         entities = self.language_client.analyze_entities(document).entities
         self.logs.debug("Found entities: %s" %
@@ -261,9 +261,9 @@ class Analysis:
             self.logs.warn("No sentiment for empty text.")
             return 0
 
-        document = language.types.Document(
+        document = google.cloud.language.types.Document(
             content=text,
-            type=language.enums.Document.Type.PLAIN_TEXT,
+            type=google.cloud.language.enums.Document.Type.PLAIN_TEXT,
             language="en")
         sentiment = self.language_client.analyze_sentiment(
             document).document_sentiment

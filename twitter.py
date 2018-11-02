@@ -2,8 +2,12 @@
 
 from os import getenv
 from simplejson import loads
-from Queue import Empty
-from Queue import Queue
+try:
+    import queue as queue
+except ImportError:
+    import Queue as queue
+from queue import Empty
+from queue import Queue
 from threading import Event
 from threading import Thread
 from time import time
