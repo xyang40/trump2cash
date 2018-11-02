@@ -18,13 +18,11 @@ from trading import USE_REAL_MONEY
 def trading():
     return Trading(logs_to_cloud=False)
 
-
 def as_market_time(year, month, day, hour=0, minute=0, second=0):
     """Creates a timestamp in market time."""
 
     market_time = datetime(year, month, day, hour, minute, second)
     return MARKET_TIMEZONE.localize(market_time)
-
 
 def test_environment_variables():
     assert TRADEKING_CONSUMER_KEY
